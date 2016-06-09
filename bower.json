@@ -1,0 +1,19 @@
+{
+  "name": "bower-test",
+  "description": "Bower Test Repo",
+  "main": "dist/test.js",
+  "authors": [
+    "Clay Carpenter <claycarpenter@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/claycarpenter/bower-test",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
