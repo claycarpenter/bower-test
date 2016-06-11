@@ -7,7 +7,8 @@ const gulp = require('gulp'),
       browserify = require('browserify'),
       source = require('vinyl-source-stream'),
       buffer = require('vinyl-buffer'),
-      sass = require('gulp-sass');
+      sass = require('gulp-sass'),
+      bourbon = require('bourbon');
 
 const Directories = {
   Source: 'src',
@@ -22,8 +23,6 @@ gulp.task('js', function() {
     .pipe(gulp.dest(Directories.Distributable));
 });
 
-// const bundler = browserify('src/pendingButton.module.js', {debug: true});
-
 const bundler = browserify(`${Directories.Source}/js/pending-button.module.js`, {debug: true})
   .transform(babelify, {presets: ["es2015"]});
 
@@ -37,7 +36,7 @@ gulp.task('browserify-js', function() {
 
 gulp.task('sass', function () {
   return gulp.src(`${Directories.Source}/sass/**/*.scss`)
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sass({includePaths: bourbon.includePaths}).on('error', sass.logError))
     .pipe(gulp.dest(`${Directories.Distributable}/`));
 });
 
