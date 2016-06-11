@@ -16,27 +16,27 @@ const Directories = {
 
 gulp.task('js', function() {
   return gulp
-    .src(`${Directories.Source}/**/*.js`)
+    .src(`${Directories.Source}/js/**/*.js`)
     .pipe(babel({ presets: ['es2015'] }))
-    .pipe(concat('all.js'))
+    .pipe(concat('pending-button.js'))
     .pipe(gulp.dest(Directories.Distributable));
 });
 
 // const bundler = browserify('src/pendingButton.module.js', {debug: true});
 
-const bundler = browserify('src/pendingButton.module.js', {debug: true})
+const bundler = browserify(`${Directories.Source}/js/pending-button.module.js`, {debug: true})
   .transform(babelify, {presets: ["es2015"]});
 
 gulp.task('browserify-js', function() {
   return bundler.bundle()
     .on('error', function(err) { console.error(err); this.emit('end'); })
-    .pipe(source('all.js'))
+    .pipe(source('pending-button.js'))
     .pipe(buffer())
     .pipe(gulp.dest(Directories.Distributable));
 });
 
 gulp.task('sass', function () {
-  return gulp.src('./sass/**/*.scss')
+  return gulp.src(`${Directories.Source}/sass/**/*.scss`)
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest(`${Directories.Distributable}/`));
 });
