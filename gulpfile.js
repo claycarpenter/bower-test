@@ -6,7 +6,8 @@ const gulp = require('gulp'),
       concat = require('gulp-concat'),
       browserify = require('browserify'),
       source = require('vinyl-source-stream'),
-      buffer = require('vinyl-buffer');
+      buffer = require('vinyl-buffer'),
+      sass = require('gulp-sass');
 
 const Directories = {
   Source: 'src',
@@ -34,12 +35,18 @@ gulp.task('browserify-js', function() {
     .pipe(gulp.dest(Directories.Distributable));
 });
 
+gulp.task('sass', function () {
+  return gulp.src('./sass/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest(`${Directories.Distributable}/`));
+});
+
 gulp.task('clean', function() {
   return del([Directories.Distributable]);
 });
 
 gulp.task('build', function(callback) {
-  runSequence('clean', 'browserify-js', callback);
+  runSequence('clean', ['browserify-js', 'sass'], callback);
 });
 
 gulp.task('default', ['build']);
