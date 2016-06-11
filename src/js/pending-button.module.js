@@ -1,5 +1,5 @@
-import {mbmPendingButton} from './pendingButton.directive';
-import {mbmPendingButtonText} from './pendingButtonText.directive';
+import {mbmPendingButton} from './pending-button.directive';
+import {mbmPendingButtonText} from './pending-button-text.directive';
 
 
 (function () {
