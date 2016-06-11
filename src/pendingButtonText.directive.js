@@ -1,13 +1,10 @@
-// angular
-//   .module('mbm.pendingButton')
-//   .directive('siPendingButtonText', ['$rootScope', siPendingButtonText]);
 
-export function siPendingButtonText($rootScope) {
+export function mbmPendingButtonText() {
   return {
     restrict: 'EA',
-    require: '^siPendingButton',
+    require: '^mbmPendingButton',
     scope: {
-      statusCategory: '@siPendingButtonText'
+      statusCategory: '@pendingButtonText'
     },
     link: function ($scope, element, attr, pendingButtonCtrl) {
       pendingButtonCtrl.registerText(onChangeStatus);

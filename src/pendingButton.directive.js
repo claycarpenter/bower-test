@@ -1,14 +1,11 @@
-  // angular
-  //   .module('mbm.pendingButton')
-  //   .directive('siPendingButton', ['$rootScope', siPendingButton]);
 
-export function siPendingButton($rootScope) {
+export function mbmPendingButton() {
   return {
     restrict: 'A',
-    require: 'siPendingButton',
+    require: 'mbmPendingButton',
     scope: {
-      isExternalEnabled: '=?siPendingButtonEnabled',
-      actionReceiver: '&siPendingButton'
+      isExternalEnabled: '=?pendingButtonEnabled',
+      actionReceiver: '&pendingButton'
     },
     controller: ['$scope', function($scope) {
       var vm = this,
