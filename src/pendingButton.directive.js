@@ -1,12 +1,7 @@
-'use strict';
-
 (function () {
-  angular.module('mbm.pendingButton', []);
-})();
-'use strict';
-
-(function () {
-  angular.module('app.form').directive('siPendingButton', ['$rootScope', siPendingButton]);
+  angular
+    .module('mbm.pendingButton')
+    .directive('siPendingButton', ['$rootScope', siPendingButton]);
 
   function siPendingButton($rootScope) {
     return {
@@ -16,7 +11,7 @@
         isExternalEnabled: '=?siPendingButtonEnabled',
         actionReceiver: '&siPendingButton'
       },
-      controller: ['$scope', function ($scope) {
+      controller: ['$scope', function($scope) {
         var vm = this,
             registeredTexts = [],
             currentState = 'init';
@@ -36,12 +31,12 @@
         };
 
         function notifyStateChange(newState) {
-          registeredTexts.forEach(function (pendingButtonTextListener) {
+          registeredTexts.forEach(function(pendingButtonTextListener) {
             pendingButtonTextListener(newState);
           });
         }
       }],
-      link: function link($scope, element, attr, pendingButtonCtrl) {
+      link: function ($scope, element, attr, pendingButtonCtrl) {
         var isWaiting = false;
 
         // If no progress icon is present, add one.
@@ -57,21 +52,17 @@
 
         $scope.isEnabled = function isEnabled() {
           return $scope.isExternalEnabled && !isWaiting;
-        };
+        }
 
-        $scope.$watch('isEnabled()', function (value) {
+        $scope.$watch('isEnabled()', function(value) {
           element.toggleClass('disabled', !value);
         });
 
-        element.on('click touchstart', function (event) {
-          if (event) {
-            event.preventDefault();
-          }
+        element.on('click touchstart', function(event) {
+          if (event) { event.preventDefault(); }
 
           // Do nothing if the button isn't enabled.
-          if (!$scope.isEnabled()) {
-            return;
-          }
+          if (!$scope.isEnabled()) { return; }
 
           // Execute the action, and capture the (expected) returned promise.
           var actionQ = $scope.actionReceiver();
@@ -85,51 +76,20 @@
 
           pendingButtonCtrl.updateState('wait');
 
-          actionQ.then(function () {
-            pendingButtonCtrl.updateState('success');
-          }).catch(function () {
-            pendingButtonCtrl.updateState('error');
-          }).finally(function () {
-            // Clear the loading animation and waiting flag.
-            isWaiting = false;
-            element.removeClass('loading');
-          });
+          actionQ
+            .then(function() {
+              pendingButtonCtrl.updateState('success');
+            })
+            .catch(function() {
+              pendingButtonCtrl.updateState('error');
+            })
+            .finally(function() {
+              // Clear the loading animation and waiting flag.
+              isWaiting = false;
+              element.removeClass('loading');
+            });
         });
       }
-    };
-  }
-})();
-'use strict';
-
-(function () {
-  'use strict';
-
-  angular.module('app.form').directive('siPendingButtonText', ['$rootScope', siPendingButtonText]);
-
-  function siPendingButtonText($rootScope) {
-    return {
-      restrict: 'EA',
-      require: '^siPendingButton',
-      scope: {
-        statusCategory: '@siPendingButtonText'
-      },
-      link: function link($scope, element, attr, pendingButtonCtrl) {
-        pendingButtonCtrl.registerText(onChangeStatus);
-
-        var states = $scope.statusCategory.split(',').map(function (state) {
-          return state.trim();
-        });
-
-        function onChangeStatus(newStatus) {
-          if (states.indexOf(newStatus) >= 0) {
-            element.show();
-          } else {
-            element.hide();
-          }
-        }
-
-        onChangeStatus(pendingButtonCtrl.getState());
-      }
-    };
+    }
   }
 })();
