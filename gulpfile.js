@@ -20,13 +20,13 @@ const Sources = {
   Styles: `${Directories.Source}/sass/**/*.scss`
 };
 
-const bundler = browserify(`${Directories.Source}/js/pending-button.module.js`, {debug: true})
+const bundler = browserify(`${Directories.Source}/js/waiting-button.module.js`, {debug: true})
   .transform(babelify, {presets: ["es2015"]});
 
 gulp.task('browserify-js', function() {
   return bundler.bundle()
     .on('error', function(err) { console.error(err); this.emit('end'); })
-    .pipe(source('pending-button.js'))
+    .pipe(source('waiting-button.js'))
     .pipe(buffer())
     .pipe(gulp.dest(Directories.Distributable));
 });

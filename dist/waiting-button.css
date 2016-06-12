@@ -22,7 +22,7 @@
   100% {
     opacity: 0.87; } }
 
-.mbm-pending-button--waiting {
+.mbm-waiting-button--waiting {
   -webkit-animation: opacityPulse 1.5s ease infinite;
   -moz-animation: opacityPulse 1.5s ease infinite;
   animation: opacityPulse 1.5s ease infinite; }

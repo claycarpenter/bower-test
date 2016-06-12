@@ -1,13 +1,13 @@
 
-export function mbmPendingButtonText() {
+export function mbmWaitingButtonText() {
   return {
     restrict: 'EA',
-    require: '^mbmPendingButton',
+    require: '^mbmWaitingButton',
     scope: {
-      statusCategory: '@pendingButtonText'
+      statusCategory: '@waitingButtonText'
     },
-    link: function ($scope, element, attr, pendingButtonCtrl) {
-      pendingButtonCtrl.registerText(onChangeStatus);
+    link: function ($scope, element, attr, waitingButtonCtrl) {
+      waitingButtonCtrl.registerText(onChangeStatus);
 
       var states = $scope.statusCategory.split(',').map(function(state) { return state.trim(); });
 
@@ -19,7 +19,7 @@ export function mbmPendingButtonText() {
         }
       }
 
-      onChangeStatus(pendingButtonCtrl.getState());
+      onChangeStatus(waitingButtonCtrl.getState());
     }
   };
 }

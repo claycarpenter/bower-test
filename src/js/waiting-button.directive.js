@@ -1,20 +1,20 @@
 
-export function mbmPendingButton() {
+export function mbmWaitingButton() {
   return {
     restrict: 'A',
-    require: 'mbmPendingButton',
+    require: 'mbmWaitingButton',
     scope: {
-      actionReceiver: '&mbmPendingButton',
-      isExternalEnabled: '=?pendingButtonEnabled',
-      waitingClass: '@?pendingButtonWaitingClass',
+      actionReceiver: '&mbmWaitingButton',
+      isExternalEnabled: '=?waitingButtonEnabled',
+      waitingClass: '@?waitingButtonWaitingClass',
     },
     controller: ['$scope', function($scope) {
       var vm = this,
           registeredTexts = [],
           currentState = 'init';
 
-      vm.registerText = function registerText(pendingButtonTextListener) {
-        registeredTexts.push(pendingButtonTextListener);
+      vm.registerText = function registerText(waitingButtonTextListener) {
+        registeredTexts.push(waitingButtonTextListener);
       };
 
       vm.updateState = function updateState(newState) {
@@ -28,16 +28,16 @@ export function mbmPendingButton() {
       };
 
       function notifyStateChange(newState) {
-        registeredTexts.forEach(function(pendingButtonTextListener) {
-          pendingButtonTextListener(newState);
+        registeredTexts.forEach(function(waitingButtonTextListener) {
+          waitingButtonTextListener(newState);
         });
       }
     }],
-    link: function ($scope, element, attr, pendingButtonCtrl) {
+    link: function ($scope, element, attr, waitingButtonCtrl) {
       var isWaiting = false;
 
       // Start with the default waiting class
-      var waitingClass = 'mbm-pending-button--waiting';
+      var waitingClass = 'mbm-waiting-button--waiting';
 
       if (typeof $scope.waitingClass === 'string') {
         // Override the default if a custom waiting class has been provided.
@@ -74,14 +74,14 @@ export function mbmPendingButton() {
         isWaiting = true;
         $scope.$apply();
 
-        pendingButtonCtrl.updateState('wait');
+        waitingButtonCtrl.updateState('wait');
 
         actionQ
           .then(function() {
-            pendingButtonCtrl.updateState('success');
+            waitingButtonCtrl.updateState('success');
           })
           .catch(function() {
-            pendingButtonCtrl.updateState('error');
+            waitingButtonCtrl.updateState('error');
           })
           .finally(function() {
             // Clear the waiting style and flag.
