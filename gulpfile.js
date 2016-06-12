@@ -15,13 +15,10 @@ const Directories = {
   Distributable: 'dist',
 };
 
-gulp.task('js', function() {
-  return gulp
-    .src(`${Directories.Source}/js/**/*.js`)
-    .pipe(babel({ presets: ['es2015'] }))
-    .pipe(concat('pending-button.js'))
-    .pipe(gulp.dest(Directories.Distributable));
-});
+const Sources = {
+  Scripts: `${Directories.Source}/js/**/*.js`,
+  Styles: `${Directories.Source}/sass/**/*.scss`
+};
 
 const bundler = browserify(`${Directories.Source}/js/pending-button.module.js`, {debug: true})
   .transform(babelify, {presets: ["es2015"]});
@@ -35,9 +32,9 @@ gulp.task('browserify-js', function() {
 });
 
 gulp.task('sass', function () {
-  return gulp.src(`${Directories.Source}/sass/**/*.scss`)
+  return gulp.src(Sources.Styles)
     .pipe(sass({includePaths: bourbon.includePaths}).on('error', sass.logError))
-    .pipe(gulp.dest(`${Directories.Distributable}/`));
+    .pipe(gulp.dest(Directories.Distributable));
 });
 
 gulp.task('clean', function() {
@@ -49,3 +46,8 @@ gulp.task('build', function(callback) {
 });
 
 gulp.task('default', ['build']);
+
+gulp.task('watch', () => {
+  gulp.watch(Sources.Scripts, ['browserify-js']);
+  gulp.watch(Sources.Styles, ['sass']);
+});
