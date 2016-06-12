@@ -35,9 +35,6 @@ export function mbmPendingButton() {
     link: function ($scope, element, attr, pendingButtonCtrl) {
       var isWaiting = false;
 
-      // Add the directive's pending-button class to the host element
-      element.addClass('mbm-pending-button');
-
       if (typeof $scope.isExternalEnabled === 'undefined') {
         // No value provided for external button enabled attribute; assume
         // button is always considered externally enabled.

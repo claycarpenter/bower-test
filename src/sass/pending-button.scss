@@ -13,8 +13,6 @@
   }
 }
 
-.mbm-pending-button {
-  &.mbm-pending-button--loading {
-    @include animation(opacityPulse 1.5s ease infinite);
-  }
+.mbm-pending-button--loading {
+  @include animation(opacityPulse 1.5s ease infinite);
 }
