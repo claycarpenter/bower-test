@@ -5,7 +5,7 @@ export function mbmPendingButton() {
     require: 'mbmPendingButton',
     scope: {
       isExternalEnabled: '=?pendingButtonEnabled',
-      actionReceiver: '&pendingButton'
+      actionReceiver: '&mbmPendingButton'
     },
     controller: ['$scope', function($scope) {
       var vm = this,
@@ -35,10 +35,8 @@ export function mbmPendingButton() {
     link: function ($scope, element, attr, pendingButtonCtrl) {
       var isWaiting = false;
 
-      // If no progress icon is present, add one.
-      if (!element.find('.button--progress-icon').length) {
-        element.append('<i class="button--progress-icon"></i>');
-      }
+      // Add the directive's pending-button class to the host element
+      element.addClass('mbm-pending-button');
 
       if (typeof $scope.isExternalEnabled === 'undefined') {
         // No value provided for external button enabled attribute; assume
@@ -64,7 +62,7 @@ export function mbmPendingButton() {
         var actionQ = $scope.actionReceiver();
 
         // Add loading animation.
-        element.addClass('loading');
+        element.addClass('mbm-pending-button--loading');
 
         // Set waiting flag, and apply scope to update isEnabled watch.
         isWaiting = true;
@@ -82,7 +80,7 @@ export function mbmPendingButton() {
           .finally(function() {
             // Clear the loading animation and waiting flag.
             isWaiting = false;
-            element.removeClass('loading');
+            element.removeClass('mbm-pending-button--loading');
           });
       });
     }

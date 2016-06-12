@@ -1,2 +1,20 @@
 
 @import 'bourbon';
+
+@include keyframes(opacityPulse) {
+  0% {
+    opacity: 0.87;
+  }
+  50% {
+    opacity: 0.70;
+  }
+  100% {
+    opacity: 0.87;
+  }
+}
+
+.mbm-pending-button {
+  &.mbm-pending-button--loading {
+    @include animation(opacityPulse 1.5s ease infinite);
+  }
+}
